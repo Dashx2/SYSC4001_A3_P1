@@ -66,8 +66,10 @@ std::tuple<std::string> run_simulation(std::vector<PCB> list_processes) {
             // Dispatch chosen process
             run_process(running, job_list, ready_queue, current_time);
             //noting the starting time to calculate metrics
-            if (running.start_time == -1)
+            if (running.start_time == -1){
             running.start_time = current_time;
+            sync_queue(job_list, running);
+            }
             // Log READY -> RUNNING (time = current_time)
             execution_status += print_exec_status(current_time, running.PID, READY, RUNNING);
         }
