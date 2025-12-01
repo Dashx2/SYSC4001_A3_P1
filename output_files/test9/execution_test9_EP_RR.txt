@@ -1,47 +1,14 @@
 +------------------------------------------------+
 |Time of Transition |PID | Old State | New State |
 +------------------------------------------------+
-|                 0 |  4 |       NEW |     READY |
-|                 0 |  4 |     READY |   RUNNING |
-|                 1 |  9 |       NEW |     READY |
-|                 3 |  1 |       NEW |     READY |
-|                 4 |  4 |   RUNNING |     READY |
-|                 4 |  1 |     READY |   RUNNING |
-|                 5 | 13 |       NEW |     READY |
-|                13 |  1 |   RUNNING |TERMINATED |
-|                14 |  4 |     READY |   RUNNING |
-|                27 |  4 |   RUNNING |TERMINATED |
-|                28 |  9 |     READY |   RUNNING |
-|                30 |  9 |   RUNNING |   WAITING |
-|                31 | 13 |     READY |   RUNNING |
-|                33 |  9 |   WAITING |     READY |
-|                34 | 13 |   RUNNING |     READY |
-|                34 |  9 |     READY |   RUNNING |
-|                36 |  9 |   RUNNING |   WAITING |
-|                37 | 13 |     READY |   RUNNING |
-|                39 |  9 |   WAITING |     READY |
-|                39 | 13 |   RUNNING |   WAITING |
-|                40 |  9 |     READY |   RUNNING |
-|                43 | 13 |   WAITING |     READY |
-|                43 |  9 |   RUNNING |   WAITING |
-|                44 | 13 |     READY |   RUNNING |
-|                46 |  9 |   WAITING |     READY |
-|                47 | 13 |   RUNNING |     READY |
-|                47 |  9 |     READY |   RUNNING |
-|                49 |  9 |   RUNNING |TERMINATED |
-|                50 | 13 |     READY |   RUNNING |
-|                51 | 13 |   RUNNING |   WAITING |
-|                55 | 13 |   WAITING |     READY |
-|                55 | 13 |     READY |   RUNNING |
-|                58 | 13 |   RUNNING |   WAITING |
-|                62 | 13 |   WAITING |     READY |
-|                62 | 13 |     READY |   RUNNING |
-|                63 | 13 |   RUNNING |TERMINATED |
+|                 0 | 13 |       NEW |     READY |
+|                 0 | 13 |     READY |   RUNNING |
+|                39 | 13 |   RUNNING |TERMINATED |
 +------------------------------------------------+
 
 ================ METRICS ================
-Throughput:           0.0625ms
-Average Waiting Time: 23.25ms
-Average Turnaround:   36.75ms
-Average Response:     29.5ms
+Throughput:           0.025ms
+Average Waiting Time: 0ms
+Average Turnaround:   40ms
+Average Response:     0ms
 ========================================

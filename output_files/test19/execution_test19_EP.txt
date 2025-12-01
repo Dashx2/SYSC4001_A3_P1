@@ -1,53 +1,38 @@
 +------------------------------------------------+
 |Time of Transition |PID | Old State | New State |
 +------------------------------------------------+
-|                 0 |  8 |       NEW |     READY |
-|                 0 |  8 |     READY |   RUNNING |
-|                 3 |  2 |       NEW |     READY |
-|                 5 |  8 |   RUNNING |   WAITING |
-|                 5 |  2 |     READY |   RUNNING |
-|                 6 | 11 |       NEW |     READY |
-|                 8 |  8 |   WAITING |     READY |
-|                30 |  2 |   RUNNING |TERMINATED |
-|                30 |  8 |     READY |   RUNNING |
-|                35 |  8 |   RUNNING |   WAITING |
-|                35 | 11 |     READY |   RUNNING |
-|                38 |  8 |   WAITING |     READY |
-|                39 | 11 |   RUNNING |   WAITING |
-|                39 |  8 |     READY |   RUNNING |
-|                41 | 11 |   WAITING |     READY |
-|                44 |  8 |   RUNNING |   WAITING |
-|                44 | 11 |     READY |   RUNNING |
-|                47 |  8 |   WAITING |     READY |
-|                48 | 11 |   RUNNING |   WAITING |
-|                48 |  8 |     READY |   RUNNING |
-|                50 | 11 |   WAITING |     READY |
-|                53 |  8 |   RUNNING |   WAITING |
-|                53 | 11 |     READY |   RUNNING |
-|                56 |  8 |   WAITING |     READY |
-|                57 | 11 |   RUNNING |   WAITING |
-|                57 |  8 |     READY |   RUNNING |
-|                59 | 11 |   WAITING |     READY |
-|                62 |  8 |   RUNNING |   WAITING |
-|                62 | 11 |     READY |   RUNNING |
-|                65 |  8 |   WAITING |     READY |
-|                66 | 11 |   RUNNING |   WAITING |
-|                66 |  8 |     READY |   RUNNING |
-|                68 | 11 |   WAITING |     READY |
-|                71 |  8 |   RUNNING |   WAITING |
-|                71 | 11 |     READY |   RUNNING |
-|                74 |  8 |   WAITING |     READY |
-|                75 | 11 |   RUNNING |TERMINATED |
-|                75 |  8 |     READY |   RUNNING |
-|                80 |  8 |   RUNNING |   WAITING |
-|                83 |  8 |   WAITING |     READY |
-|                83 |  8 |     READY |   RUNNING |
-|                88 |  8 |   RUNNING |TERMINATED |
+|                 0 | 32 |       NEW |     READY |
+|                 0 | 32 |     READY |   RUNNING |
+|                 2 | 33 |       NEW |     READY |
+|                 3 | 34 |       NEW |     READY |
+|                 5 | 32 |   RUNNING |   WAITING |
+|                 5 | 33 |     READY |   RUNNING |
+|                 7 | 32 |   WAITING |     READY |
+|                11 | 33 |   RUNNING |TERMINATED |
+|                11 | 32 |     READY |   RUNNING |
+|                16 | 32 |   RUNNING |   WAITING |
+|                16 | 34 |     READY |   RUNNING |
+|                18 | 32 |   WAITING |     READY |
+|                19 | 34 |   RUNNING |   WAITING |
+|                19 | 32 |     READY |   RUNNING |
+|                20 | 34 |   WAITING |     READY |
+|                24 | 32 |   RUNNING |   WAITING |
+|                24 | 34 |     READY |   RUNNING |
+|                26 | 32 |   WAITING |     READY |
+|                27 | 34 |   RUNNING |   WAITING |
+|                27 | 32 |     READY |   RUNNING |
+|                28 | 34 |   WAITING |     READY |
+|                32 | 32 |   RUNNING |TERMINATED |
+|                32 | 34 |     READY |   RUNNING |
+|                35 | 34 |   RUNNING |   WAITING |
+|                36 | 34 |   WAITING |     READY |
+|                36 | 34 |     READY |   RUNNING |
+|                37 | 34 |   RUNNING |TERMINATED |
 +------------------------------------------------+
 
 ================ METRICS ================
-Throughput:           0.0340909ms
-Average Waiting Time: 33ms
-Average Turnaround:   61.3333ms
-Average Response:     50ms
+Throughput:           0.0810811ms
+Average Waiting Time: 13ms
+Average Turnaround:   25ms
+Average Response:     21ms
 ========================================

@@ -1,17 +1,35 @@
 +------------------------------------------------+
 |Time of Transition |PID | Old State | New State |
 +------------------------------------------------+
-|                 0 |  8 |       NEW |     READY |
-|                 0 |  3 |       NEW |     READY |
-|                 0 |  3 |     READY |   RUNNING |
-|               160 |  3 |   RUNNING |TERMINATED |
-|               160 |  8 |     READY |   RUNNING |
-|               380 |  8 |   RUNNING |TERMINATED |
+|                 0 | 15 |       NEW |     READY |
+|                 0 | 15 |     READY |   RUNNING |
+|                 2 | 15 |   RUNNING |   WAITING |
+|                 3 | 15 |   WAITING |     READY |
+|                 3 | 15 |     READY |   RUNNING |
+|                 5 | 15 |   RUNNING |   WAITING |
+|                 6 | 15 |   WAITING |     READY |
+|                 6 | 15 |     READY |   RUNNING |
+|                 8 | 15 |   RUNNING |   WAITING |
+|                 9 | 15 |   WAITING |     READY |
+|                 9 | 15 |     READY |   RUNNING |
+|                11 | 15 |   RUNNING |   WAITING |
+|                12 | 15 |   WAITING |     READY |
+|                12 | 15 |     READY |   RUNNING |
+|                14 | 15 |   RUNNING |   WAITING |
+|                15 | 15 |   WAITING |     READY |
+|                15 | 15 |     READY |   RUNNING |
+|                17 | 15 |   RUNNING |   WAITING |
+|                18 | 15 |   WAITING |     READY |
+|                18 | 15 |     READY |   RUNNING |
+|                20 | 15 |   RUNNING |   WAITING |
+|                21 | 15 |   WAITING |     READY |
+|                21 | 15 |     READY |   RUNNING |
+|                22 | 15 |   RUNNING |TERMINATED |
 +------------------------------------------------+
 
 ================ METRICS ================
-Throughput:           0.00526316ms
-Average Waiting Time: 80ms
-Average Turnaround:   270ms
-Average Response:     80ms
+Throughput:           0.0454545ms
+Average Waiting Time: 7ms
+Average Turnaround:   22ms
+Average Response:     21ms
 ========================================

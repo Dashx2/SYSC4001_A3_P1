@@ -1,56 +1,53 @@
 +------------------------------------------------+
 |Time of Transition |PID | Old State | New State |
 +------------------------------------------------+
-|                 0 |  6 |       NEW |     READY |
-|                 0 |  2 |       NEW |     READY |
-|                 0 |  2 |     READY |   RUNNING |
-|                 2 |  2 |   RUNNING |   WAITING |
-|                 2 |  6 |     READY |   RUNNING |
-|                 4 |  6 |   RUNNING |   WAITING |
-|                 5 |  2 |   WAITING |     READY |
-|                 5 |  2 |     READY |   RUNNING |
-|                 6 |  6 |   WAITING |     READY |
-|                 7 |  2 |   RUNNING |   WAITING |
-|                 7 |  6 |     READY |   RUNNING |
-|                 9 |  6 |   RUNNING |   WAITING |
-|                10 |  2 |   WAITING |     READY |
-|                10 |  2 |     READY |   RUNNING |
-|                11 |  6 |   WAITING |     READY |
-|                12 |  2 |   RUNNING |   WAITING |
-|                12 |  6 |     READY |   RUNNING |
-|                14 |  6 |   RUNNING |   WAITING |
-|                15 |  2 |   WAITING |     READY |
-|                15 |  2 |     READY |   RUNNING |
-|                16 |  6 |   WAITING |     READY |
-|                17 |  2 |   RUNNING |   WAITING |
-|                17 |  6 |     READY |   RUNNING |
-|                19 |  6 |   RUNNING |   WAITING |
-|                20 |  2 |   WAITING |     READY |
-|                20 |  2 |     READY |   RUNNING |
-|                21 |  6 |   WAITING |     READY |
-|                22 |  2 |   RUNNING |   WAITING |
-|                22 |  6 |     READY |   RUNNING |
-|                24 |  6 |   RUNNING |   WAITING |
-|                25 |  2 |   WAITING |     READY |
-|                25 |  2 |     READY |   RUNNING |
-|                26 |  6 |   WAITING |     READY |
-|                27 |  2 |   RUNNING |   WAITING |
-|                27 |  6 |     READY |   RUNNING |
-|                29 |  6 |   RUNNING |   WAITING |
-|                30 |  2 |   WAITING |     READY |
-|                30 |  2 |     READY |   RUNNING |
-|                31 |  6 |   WAITING |     READY |
-|                32 |  2 |   RUNNING |TERMINATED |
-|                32 |  6 |     READY |   RUNNING |
-|                34 |  6 |   RUNNING |   WAITING |
-|                36 |  6 |   WAITING |     READY |
-|                36 |  6 |     READY |   RUNNING |
-|                38 |  6 |   RUNNING |TERMINATED |
+|                 0 | 18 |       NEW |     READY |
+|                 0 | 18 |     READY |   RUNNING |
+|                 1 | 19 |       NEW |     READY |
+|                 2 | 20 |       NEW |     READY |
+|                 3 | 18 |   RUNNING |   WAITING |
+|                 3 | 19 |     READY |   RUNNING |
+|                 5 | 19 |   RUNNING |   WAITING |
+|                 5 | 18 |   WAITING |     READY |
+|                 5 | 18 |     READY |   RUNNING |
+|                 6 | 19 |   WAITING |     READY |
+|                 8 | 18 |   RUNNING |   WAITING |
+|                 8 | 19 |     READY |   RUNNING |
+|                10 | 19 |   RUNNING |   WAITING |
+|                10 | 18 |   WAITING |     READY |
+|                10 | 18 |     READY |   RUNNING |
+|                11 | 19 |   WAITING |     READY |
+|                13 | 18 |   RUNNING |   WAITING |
+|                13 | 19 |     READY |   RUNNING |
+|                15 | 19 |   RUNNING |   WAITING |
+|                15 | 18 |   WAITING |     READY |
+|                15 | 18 |     READY |   RUNNING |
+|                16 | 19 |   WAITING |     READY |
+|                18 | 18 |   RUNNING |   WAITING |
+|                18 | 19 |     READY |   RUNNING |
+|                20 | 19 |   RUNNING |   WAITING |
+|                20 | 18 |   WAITING |     READY |
+|                20 | 18 |     READY |   RUNNING |
+|                21 | 19 |   WAITING |     READY |
+|                22 | 18 |   RUNNING |TERMINATED |
+|                22 | 19 |     READY |   RUNNING |
+|                24 | 19 |   RUNNING |   WAITING |
+|                24 | 20 |     READY |   RUNNING |
+|                25 | 19 |   WAITING |     READY |
+|                28 | 20 |   RUNNING |   WAITING |
+|                28 | 19 |     READY |   RUNNING |
+|                29 | 20 |   WAITING |     READY |
+|                30 | 19 |   RUNNING |TERMINATED |
+|                30 | 20 |     READY |   RUNNING |
+|                34 | 20 |   RUNNING |   WAITING |
+|                35 | 20 |   WAITING |     READY |
+|                35 | 20 |     READY |   RUNNING |
+|                37 | 20 |   RUNNING |TERMINATED |
 +------------------------------------------------+
 
 ================ METRICS ================
-Throughput:           0.0526316ms
-Average Waiting Time: 20ms
-Average Turnaround:   35ms
-Average Response:     33ms
+Throughput:           0.0810811ms
+Average Waiting Time: 16.6667ms
+Average Turnaround:   28.6667ms
+Average Response:     26.6667ms
 ========================================
