@@ -1,0 +1,23 @@
++------------------------------------------------+
+|Time of Transition |PID | Old State | New State |
++------------------------------------------------+
+|                 0 |  8 |       NEW |     READY |
+|                 0 |  3 |       NEW |     READY |
+|                 0 |  3 |     READY |   RUNNING |
+|               100 |  3 |   RUNNING |     READY |
+|               100 |  8 |     READY |   RUNNING |
+|               200 |  8 |   RUNNING |     READY |
+|               200 |  3 |     READY |   RUNNING |
+|               260 |  3 |   RUNNING |TERMINATED |
+|               260 |  8 |     READY |   RUNNING |
+|               360 |  8 |   RUNNING |     READY |
+|               360 |  8 |     READY |   RUNNING |
+|               380 |  8 |   RUNNING |TERMINATED |
++------------------------------------------------+
+
+================ METRICS ================
+Throughput:           0.00526316ms
+Average Waiting Time: 130ms
+Average Turnaround:   320ms
+Average Response:     280ms
+========================================

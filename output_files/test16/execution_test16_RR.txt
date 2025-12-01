@@ -1,0 +1,41 @@
++------------------------------------------------+
+|Time of Transition |PID | Old State | New State |
++------------------------------------------------+
+|                 0 | 12 |       NEW |     READY |
+|                 0 | 12 |     READY |   RUNNING |
+|                 2 |  7 |       NEW |     READY |
+|                 4 |  3 |       NEW |     READY |
+|                 7 |  9 |       NEW |     READY |
+|                22 | 12 |   RUNNING |TERMINATED |
+|                22 |  9 |     READY |   RUNNING |
+|                32 |  9 |   RUNNING |TERMINATED |
+|                32 |  3 |     READY |   RUNNING |
+|                35 |  3 |   RUNNING |   WAITING |
+|                36 |  3 |   WAITING |     READY |
+|                36 |  7 |     READY |   RUNNING |
+|                42 |  7 |   RUNNING |   WAITING |
+|                42 |  3 |     READY |   RUNNING |
+|                44 |  7 |   WAITING |     READY |
+|                46 |  3 |   RUNNING |   WAITING |
+|                47 |  3 |   WAITING |     READY |
+|                47 |  7 |     READY |   RUNNING |
+|                53 |  7 |   RUNNING |   WAITING |
+|                53 |  3 |     READY |   RUNNING |
+|                55 |  7 |   WAITING |     READY |
+|                57 |  3 |   RUNNING |   WAITING |
+|                58 |  3 |   WAITING |     READY |
+|                58 |  7 |     READY |   RUNNING |
+|                64 |  7 |   RUNNING |TERMINATED |
+|                64 |  3 |     READY |   RUNNING |
+|                67 |  3 |   RUNNING |   WAITING |
+|                68 |  3 |   WAITING |     READY |
+|                68 |  3 |     READY |   RUNNING |
+|                71 |  3 |   RUNNING |TERMINATED |
++------------------------------------------------+
+
+================ METRICS ================
+Throughput:           0.056338ms
+Average Waiting Time: 27.75ms
+Average Turnaround:   44ms
+Average Response:     33.75ms
+========================================

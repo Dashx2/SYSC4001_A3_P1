@@ -1,0 +1,44 @@
++------------------------------------------------+
+|Time of Transition |PID | Old State | New State |
++------------------------------------------------+
+|                 0 |  1 |       NEW |     READY |
+|                 0 |  4 |       NEW |     READY |
+|                 0 | 10 |       NEW |     READY |
+|                 0 | 10 |     READY |   RUNNING |
+|                 3 | 10 |   RUNNING |   WAITING |
+|                 3 |  4 |     READY |   RUNNING |
+|                 5 | 10 |   WAITING |     READY |
+|                10 |  4 |   RUNNING |   WAITING |
+|                10 |  1 |     READY |   RUNNING |
+|                13 |  4 |   WAITING |     READY |
+|                41 |  1 |   RUNNING |TERMINATED |
+|                41 | 10 |     READY |   RUNNING |
+|                44 | 10 |   RUNNING |   WAITING |
+|                44 |  4 |     READY |   RUNNING |
+|                46 | 10 |   WAITING |     READY |
+|                51 |  4 |   RUNNING |   WAITING |
+|                51 | 10 |     READY |   RUNNING |
+|                54 |  4 |   WAITING |     READY |
+|                55 | 10 |   RUNNING |   WAITING |
+|                55 |  4 |     READY |   RUNNING |
+|                57 | 10 |   WAITING |     READY |
+|                62 |  4 |   RUNNING |   WAITING |
+|                62 | 10 |     READY |   RUNNING |
+|                65 |  4 |   WAITING |     READY |
+|                66 | 10 |   RUNNING |   WAITING |
+|                66 |  4 |     READY |   RUNNING |
+|                68 | 10 |   WAITING |     READY |
+|                73 |  4 |   RUNNING |TERMINATED |
+|                73 | 10 |     READY |   RUNNING |
+|                76 | 10 |   RUNNING |   WAITING |
+|                78 | 10 |   WAITING |     READY |
+|                78 | 10 |     READY |   RUNNING |
+|                81 | 10 |   RUNNING |TERMINATED |
++------------------------------------------------+
+
+================ METRICS ================
+Throughput:           0.037037ms
+Average Waiting Time: 41ms
+Average Turnaround:   65ms
+Average Response:     51.3333ms
+========================================
