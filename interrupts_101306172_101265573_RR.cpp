@@ -29,6 +29,8 @@ std::tuple<std::string /* add std::string for bonus mark */ > run_simulation(std
     unsigned int current_time = 0;
     PCB running;
 
+    const unsigned int TIME_QUANTUM = 100; // setting time quantum
+    unsigned int time_slice_used = 0; //checking the time that has been utilized within time quantum
     //Initialize an empty running process
     idle_CPU(running);
 
@@ -63,20 +65,140 @@ std::tuple<std::string /* add std::string for bonus mark */ > run_simulation(std
 
         ///////////////////////MANAGE WAIT QUEUE/////////////////////////
         //This mainly involves keeping track of how long a process must remain in the ready queue
+        static std::vector<unsigned int> wait_remaining;
+        if (wait_remaining.size() != wait_queue.size()) {
+            // Initialize if needed (first time some processes enter wait_queue).
+            wait_remaining.assign(wait_queue.size(), 0);
+        }
 
+        for (std::size_t i = 0; i < wait_queue.size(); /* increment inside */) {
+            if (wait_remaining[i] > 0) {
+                wait_remaining[i]--;
+            }
+
+            if (wait_remaining[i] == 0) {
+                // I/O finished -> move to READY
+                PCB proc = wait_queue[i];
+                proc.state = READY;
+                sync_queue(job_list, proc);
+
+                // Enqueue at READY queue "tail" (see comment above about mapping)
+                ready_queue.insert(ready_queue.begin(), proc);
+
+                // Log WAITING -> READY at time current_time + 1
+                execution_status += print_exec_status(current_time + 1,proc.PID,WAITING,READY);
+                current_time += 1;
+                // Remove from wait_queue & wait_remaining
+                wait_queue.erase(wait_queue.begin() + i);
+                wait_remaining.erase(wait_remaining.begin() + i);
+            } else {
+                ++i;
+            }
+        }
         /////////////////////////////////////////////////////////////////
 
         //////////////////////////SCHEDULER//////////////////////////////
-        FCFS(ready_queue); //example of FCFS is shown here
-        /////////////////////////////////////////////////////////////////
+        if (running.PID == -1 && !ready_queue.empty()) {
+            // Next process to run is at ready_queue.back() (see comments above)
+            run_process(running, job_list, ready_queue, current_time);
 
+            // Reset time slice for this process
+            time_slice_used = 0;
+            //noting the starting time to calculate metrics
+            if (running.start_time == -1){
+            running.start_time = current_time;
+            sync_queue(job_list, running);
+            }
+            // Log READY -> RUNNING at current_time
+            execution_status += print_exec_status(current_time,running.PID,READY,RUNNING);
+        }
+        if (running.PID != -1) {
+            // Consume 1ms of CPU
+            if (running.remaining_time > 0) {
+                running.remaining_time--;
+            }
+
+            time_slice_used++;
+
+            // Total CPU used so far by this process
+            unsigned int used_cpu = running.processing_time - running.remaining_time;
+
+            bool do_terminate = false;
+            bool do_io = false;
+            bool do_preempt = false;
+
+            // 1) Check for termination
+            if (running.remaining_time == 0) {
+                do_terminate = true;
+            }
+            // 2) Check for I/O event (if process actually does I/O)
+            else if (running.io_freq > 0 &&
+                    (used_cpu % running.io_freq == 0)) {
+                do_io = true;
+            }
+            // 3) Check for quantum expiration (RR preemption)
+            else if (time_slice_used >= TIME_QUANTUM) {
+                do_preempt = true;
+            }
+
+            if (do_terminate) {
+                // RUNNING -> TERMINATED at time current_time + 1
+                execution_status += print_exec_status(current_time + 1,running.PID,RUNNING,TERMINATED);
+                running.completion_time = current_time + 1;
+                terminate_process(running, job_list);
+                idle_CPU(running);
+                time_slice_used = 0;
+            }
+            else if (do_io) {
+                // RUNNING -> WAITING at time current_time + 1
+                running.state = WAITING;
+                sync_queue(job_list, running);
+
+                wait_queue.push_back(running);
+
+                // Ensure wait_remaining has same size as wait_queue
+                if (wait_remaining.size() < wait_queue.size()) {
+                    wait_remaining.push_back(running.io_duration);
+                } else {
+                    wait_remaining[wait_queue.size() - 1] = running.io_duration;
+                }
+
+                execution_status += print_exec_status(current_time + 1,running.PID,RUNNING,WAITING);
+                idle_CPU(running);
+                time_slice_used = 0;
+            }
+            else if (do_preempt) {
+                // Time quantum expired but process still has work and no I/O
+                // RUNNING -> READY at time current_time + 1
+                running.state = READY;
+                sync_queue(job_list, running);
+
+                // Enqueue at end of RR queue (tail)
+                ready_queue.insert(ready_queue.begin(), running);
+
+                execution_status += print_exec_status(current_time + 1,running.PID,RUNNING,READY);
+                idle_CPU(running);
+                time_slice_used = 0;
+            }
+            else {
+                // Still RUNNING; just sync remaining_time etc.
+                sync_queue(job_list, running);
+            }
+        }
+
+        ////////////////////// Advance simulated time //////////////////////
+        current_time++;
     }
+        /////////////////////////////////////////////////////////////////
     
     //Close the output table
     execution_status += print_exec_footer();
+    Metrics metrics = calculate_metrics(job_list);
+    execution_status += metrics;
 
     return std::make_tuple(execution_status);
 }
+
 
 
 int main(int argc, char** argv) {

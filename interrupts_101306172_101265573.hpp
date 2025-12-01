@@ -65,6 +65,8 @@ struct PCB{
     enum states     state;
     unsigned int    io_freq;
     unsigned int    io_duration;
+
+    unsigned int    completion_time;   // time when TERMINATED
 };
 
 //------------------------------------HELPER FUNCTIONS FOR THE SIMULATOR------------------------------
@@ -223,7 +225,92 @@ void write_output(std::string execution, const char* filename) {
 
     std::cout << "Output generated in " << filename << ".txt" << std::endl;
 }
+//creating a function to calculate metrics
+struct Metrics {
+    double throughput;           // processes per unit time (here: per ms)
+    double avg_waiting_time;     
+    double avg_turnaround_time;  
+    double avg_response_time;
+    
+    //converting struct metric into String to allow appending execution.txt
+        operator std::string() const {
+        std::ostringstream oss;
+        oss << "\n================ METRICS ================\n";
+        oss << "Throughput:           " << throughput << "ms\n";
+        oss << "Average Waiting Time: " << avg_waiting_time << "ms\n";
+        oss << "Average Turnaround:   " << avg_turnaround_time << "ms\n";
+        oss << "Average Response:     " << avg_response_time << "ms\n";
+        oss << "========================================\n";
+        return oss.str();
+    }
+};
+Metrics calculate_metrics(const std::vector<PCB> &job_list) {
+    Metrics m{0.0, 0.0, 0.0, 0.0};
 
+    if (job_list.empty()) {
+        return m;
+    }
+
+    double total_waiting    = 0.0;
+    double total_turnaround = 0.0;
+    double total_response   = 0.0;
+    int    completed_count  = 0;
+
+    bool first_terminated   = true;
+    unsigned int earliest_arrival  = 0;
+    unsigned int latest_completion = 0;
+
+    for (const auto &p : job_list) {
+        if (p.state != TERMINATED) {
+            // ignore incomplete processes (shouldn't happen at end of sim)
+            continue;
+        }
+
+        completed_count++;
+
+        // Initialize min/max using the first TERMINATED process
+        if (first_terminated) {
+            earliest_arrival  = p.arrival_time;
+            latest_completion = p.completion_time;
+            first_terminated  = false;
+        } else {
+            if (p.arrival_time < earliest_arrival) {
+                earliest_arrival = p.arrival_time;
+            }
+            if (p.completion_time > latest_completion) {
+                latest_completion = p.completion_time;
+            }
+        }
+
+        unsigned int turnaround = p.completion_time - p.arrival_time;
+        unsigned int response   = (p.start_time >= 0)
+                                ? static_cast<unsigned int>(p.start_time - p.arrival_time)
+                                  : turnaround; // fallback if start_time not set
+        unsigned int waiting    = turnaround - p.processing_time;
+
+        total_turnaround += turnaround;
+        total_response   += response;
+        total_waiting    += waiting;
+    }
+
+    if (completed_count == 0) {
+        return m;
+    }
+
+    m.avg_turnaround_time = total_turnaround / completed_count;
+    m.avg_response_time   = total_response   / completed_count;
+    m.avg_waiting_time    = total_waiting    / completed_count;
+
+    // Throughput: completed processes per total elapsed time
+    unsigned int total_time =
+        (latest_completion > earliest_arrival)
+        ? (latest_completion - earliest_arrival)
+        : 1; // avoid divide-by-zero
+
+    m.throughput = static_cast<double>(completed_count) / total_time;
+
+    return m;
+}
 //--------------------------------------------FUNCTIONS FOR THE "OS"-------------------------------------
 
 //Assign memory partition to program
@@ -269,7 +356,7 @@ PCB add_process(std::vector<std::string> tokens) {
     process.start_time = -1;
     process.partition_number = -1;
     process.state = NOT_ASSIGNED;
-
+    process.completion_time = 0;
     return process;
 }
 

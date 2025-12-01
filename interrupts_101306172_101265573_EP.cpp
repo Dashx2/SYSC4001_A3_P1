@@ -49,7 +49,7 @@ std::tuple<std::string> run_simulation(std::vector<PCB> list_processes) {
                 job_list.push_back(process);
 
                 // Log NEW -> READY
-                execution_status += print_exec_status(current_time,process.PID,NEW,READY);
+                execution_status += print_exec_status(current_time, process.PID, NEW, READY);
             }
         }
 
@@ -59,18 +59,23 @@ std::tuple<std::string> run_simulation(std::vector<PCB> list_processes) {
             // Sort so smallest PID ends up at back(), since run_process()
             // takes ready_queue.back().
             std::sort(ready_queue.begin(), ready_queue.end(),
-                      [](const PCB &a, const PCB &b) {
-                          return a.PID > b.PID;   // descending; smallest at .back()
-                      });
+                    [](const PCB &a, const PCB &b) {
+                    return a.PID > b.PID;   // descending; smallest at .back()
+                    });
 
             // Dispatch chosen process
             run_process(running, job_list, ready_queue, current_time);
-
+            //noting the starting time to calculate metrics
+            if (running.start_time == -1)
+            running.start_time = current_time;
             // Log READY -> RUNNING (time = current_time)
-            execution_status += print_exec_status(current_time,running.PID,READY,RUNNING);
+            execution_status += print_exec_status(current_time, running.PID, READY, RUNNING);
         }
 
-        //////////////////// 3) Run 1 ms of CPU ////////////////////
+        // ****** NEW: snapshot how many processes were already waiting
+        std::size_t wait_size_before = wait_queue.size();
+
+
         // Any events from this 1 ms (I/O or termination) happen at time current_time + 1.
         if (running.PID != -1) {
             // Consume 1 ms of CPU
@@ -90,13 +95,14 @@ std::tuple<std::string> run_simulation(std::vector<PCB> list_processes) {
             }
             // Else check for I/O event (if there is any I/O)
             else if (running.io_freq > 0 &&
-                     (used_cpu % running.io_freq == 0)) {
+                    (used_cpu % running.io_freq == 0)) {
                 do_io = true;
             }
 
             if (do_terminate) {
                 // RUNNING -> TERMINATED at time current_time + 1
-                execution_status += print_exec_status(current_time + 1,running.PID,RUNNING,TERMINATED);
+                execution_status += print_exec_status(current_time + 1, running.PID, RUNNING, TERMINATED);
+                running.completion_time = current_time + 1;
                 terminate_process(running, job_list);
                 idle_CPU(running);
             } else if (do_io) {
@@ -107,7 +113,7 @@ std::tuple<std::string> run_simulation(std::vector<PCB> list_processes) {
                 wait_queue.push_back(running);
                 wait_remaining.push_back(running.io_duration);
 
-                execution_status += print_exec_status(current_time + 1,running.PID,RUNNING,WAITING);
+                execution_status += print_exec_status(current_time + 1, running.PID, RUNNING, WAITING);
                 idle_CPU(running);
             } else {
                 // Still RUNNING; just sync remaining_time in job_list
@@ -115,10 +121,11 @@ std::tuple<std::string> run_simulation(std::vector<PCB> list_processes) {
             }
         }
 
-        //////////////////// 4) I/O progress for WAITING processes ////////////////////
-        // Each waiting process gets 1 ms of I/O service in [current_time, current_time+1).
-        // If its I/O finishes, it becomes READY at time current_time + 1.
-        for (std::size_t i = 0; i < wait_queue.size(); /* increment inside */) {
+        // Only advance those that were already in wait_queue at the
+        // start of this tick (wait_size_before).
+        std::size_t i = 0;
+        std::size_t processed = 0;
+        while (processed < wait_size_before && i < wait_queue.size()) {
             if (wait_remaining[i] > 0) {
                 wait_remaining[i]--;
             }
@@ -130,25 +137,31 @@ std::tuple<std::string> run_simulation(std::vector<PCB> list_processes) {
                 ready_queue.push_back(proc);
 
                 // WAITING -> READY at time current_time + 1
-                execution_status += print_exec_status(current_time + 1,proc.PID,WAITING,READY);
+                execution_status += print_exec_status(current_time + 1, proc.PID, WAITING, READY);
 
                 // Remove from wait_queue/wait_remaining
                 wait_queue.erase(wait_queue.begin() + i);
                 wait_remaining.erase(wait_remaining.begin() + i);
+                // don't increment i (vector shrank)
             } else {
                 ++i;
             }
+
+            ++processed;
         }
 
-        //////////////////// 5) Advance time ////////////////////
+
         current_time++;
     }
 
     // Footer row of the execution table
     execution_status += print_exec_footer();
+    Metrics metrics = calculate_metrics(job_list);
+    execution_status += metrics;
 
     return std::make_tuple(execution_status);
 }
+
 
 
 
